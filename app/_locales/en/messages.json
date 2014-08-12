@@ -1,0 +1,74 @@
+{
+  "appName": {
+    "message": "Sense Ebola"
+  },
+  "appDescription": {
+    "message": "Ebola patient tracing system."
+  },
+  "appAuthor": {
+    "message": "eHealth Systems Africa Foundation"
+  },
+  "contactId": {
+    "message": "Contact Id"
+  },
+  "patientInfo": {
+    "message": "Contact Information"
+  },
+  "nameOfContact": {
+    "message": "Name of Contact"
+  },
+  "lgaName": {
+    "message": "LGA Name"
+  },
+  "gpsCoords": {
+    "message": "GPS Coordinates"
+  },
+  "patientContactPerson": {
+    "message": "Patient Contact Person(s)"
+  },
+  "contactPersonInfo": {
+    "message": "Contact Person Info."
+  },
+  "submit": {
+    "message": "Submit"
+  },
+  "online": {
+    "message": "Online"
+  },
+  "offline": {
+    "message": "Offline"
+  },
+  "toggleNavigation": {
+    "message": "Toggle navigation"
+  },
+  "termsOfService": {
+    "message": "Terms of Service"
+  },
+  "privacyPolicy": {
+    "message": "Privacy Policy"
+  },
+  "contactUs": {
+    "message": "Contact us"
+  },
+  "confirm": {
+    "message": "Confirm"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "yes": {
+    "message": "Yes"
+  },
+  "no": {
+    "message": "No"
+  },
+  "back": {
+    "message": "Back"
+  },
+  "symptomsQuestionnaire": {
+    "message": "Symptoms' Questionnaire"
+  }
+}

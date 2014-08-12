@@ -1,0 +1,230 @@
+<div class="col-sm-15" ng-if="showInfo !== true">
+    <form role="form">
+        <div class="form-group">
+            <label i18n="contactId"></label>
+            <input type="number"
+                   ng-model="patientIdNo"
+                   class="form-control"
+                   required="true"
+                   placeholder="Enter contact id.">
+        </div>
+        <button type="button"
+                ng-click="getPatientInfo()"
+                class="btn btn-info btn-lg btn-block"
+                i18n="submit">
+        </button>
+    </form>
+</div>
+
+<div class="col-sm-15" ng-if="showInfo === true">
+<button type="button"
+        ng-click="showForm()"
+        class="btn btn-default btn-lg btn-block">
+    <i class="fa fa-chevron-circle-left"></i>
+    <span i18n="back"></span>
+</button>
+<br/>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <i class="fa fa-user"></i>
+            <span i18n="patientInfo"></span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label i18n="contactId"></label><br/>
+            <span>12345-89-HKA</span>
+        </div>
+        <div class="form-group">
+            <label i18n="nameOfContact"></label><br/>
+            <span>Mr ABC DEF</span>
+        </div>
+        <div class="form-group">
+            <label i18n="lgaName"></label><br/>
+            <span>Agege</span>
+        </div>
+        <div class="form-group">
+            <label i18n="gpsCoords"></label><br/>
+            <span>Lat: 11.19101001, Long: 8.982182</span>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <i class="fa fa-question-circle"></i>
+            <span i18n="symptomsQuestionnaire"></span>
+        </div>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item">
+            <div class="col-md-15">
+                <label>Temperature reading (in degree celsius)?</label>
+                <input type="number"
+                       class="form-control"
+                       placeholder="Enter temp. reading in degree celsius."/>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="col-md-12">
+                <label>Any sign of Malaise?</label>
+            </div>
+            <div class="col-md-15 pull-right">
+                <label class="input-control">
+                    <input type="radio" name="fever"
+                           ng-value="true"/>
+                    <span i18n="yes"></span>
+                </label>
+                <label class="input-control">
+                    <input type="radio" name="fever"
+                           ng-value="false">
+                    <span i18n="no"></span>
+                </label>
+            </div>
+            <div class="panel-body"></div>
+        </div>
+        <div class="list-group-item">
+            <div class="col-md-12">
+                <label>Any sign of Muscle pain?</label>
+            </div>
+            <div class="col-md-15 pull-right">
+                <label class="input-control">
+                    <input type="radio" name="fever"
+                           ng-value="true"/>
+                    <span i18n="yes"></span>
+                </label>
+                <label class="input-control">
+                    <input type="radio" name="fever"
+                           ng-value="false">
+                    <span i18n="no"></span>
+                </label>
+            </div>
+            <div class="panel-body"></div>
+        </div>
+        <div class="list-group-item">
+            <div class="col-md-12">
+                <label>Any sign of Headache?</label>
+            </div>
+            <div class="col-md-15 pull-right">
+                <label class="input-control">
+                    <input type="radio" name="fever"
+                           ng-value="true"/>
+                    <span i18n="yes"></span>
+                </label>
+                <label class="input-control">
+                    <input type="radio" name="fever"
+                           ng-value="false">
+                    <span i18n="no"></span>
+                </label>
+            </div>
+            <div class="panel-body"></div>
+        </div>
+    </div>
+    <div class="list-group-item">
+        <div class="col-md-12">
+            <label>Any sign of Pharyngitis?</label>
+        </div>
+        <div class="col-md-15 pull-right">
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="true"/>
+                <span i18n="yes"></span>
+            </label>
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="false">
+                <span i18n="no"></span>
+            </label>
+        </div>
+        <div class="panel-body"></div>
+    </div>
+    <div class="list-group-item">
+        <div class="col-md-12">
+            <label>Any Vomiting?</label>
+        </div>
+        <div class="col-md-15 pull-right">
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="true"/>
+                <span i18n="yes"></span>
+            </label>
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="false">
+                <span i18n="no"></span>
+            </label>
+        </div>
+        <div class="panel-body"></div>
+    </div>
+    <div class="list-group-item">
+        <div class="col-md-12">
+            <label>Any Diarrhoea?</label>
+        </div>
+        <div class="col-md-15 pull-right">
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="true"/>
+                <span i18n="yes"></span>
+            </label>
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="false">
+                <span i18n="no"></span>
+            </label>
+        </div>
+        <div class="panel-body"></div>
+    </div>
+    <div class="list-group-item">
+        <div class="col-md-12">
+            <label>Any Maculopapular Rash?</label>
+        </div>
+        <div class="col-md-15 pull-right">
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="true"/>
+                <span i18n="yes"></span>
+            </label>
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="false">
+                <span i18n="no"></span>
+            </label>
+        </div>
+        <div class="panel-body"></div>
+    </div>
+    <div class="list-group-item">
+        <div class="col-md-12">
+            <label>Any Haemorrhagic signs?</label>
+        </div>
+        <div class="col-md-15 pull-right">
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="true"/>
+                <span i18n="yes"></span>
+            </label>
+            <label class="input-control">
+                <input type="radio" name="fever"
+                       ng-value="false">
+                <span i18n="no"></span>
+            </label>
+        </div>
+        <div class="panel-body"></div>
+    </div>
+    <div class="list-group-item">
+        <div class="col-md-12">
+            <label>Comment on contact</label>
+            <textarea class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+</div>
+<button type="button"
+        ng-click="reportDailyVisit()"
+        class="btn btn-success btn-lg btn-block">
+    <i class="fa fa-plus-circle"></i>
+    <span>Report Daily Visit</span>
+</button>
+<br/>
+</div>
+
+<ui-view/>

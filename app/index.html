@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="lmisChromeApp" ng-csp>
+<head>
+  <meta charset="utf-8">
+  <title>Sense Ebola Followup</title>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular/angular-csp.css" />
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-theme-cosmo/cosmo.min.css" />
+  <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+  <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp,app}) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body>
+  <div ui-view></div>
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/tv-breadcrumbs/dist/tv-breadcrumbs.min.js"></script>
+  <script src="bower_components/pouchdb/dist/pouchdb-nightly.js"></script>
+  <script src="bower_components/angular-pouchdb/angular-pouchdb.js"></script>
+  <script src="bower_components/d3/d3.js"></script>
+  <script src="bower_components/nvd3/nv.d3.js"></script>
+  <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+  <script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/chrome-platform-analytics/google-analytics-bundle.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/config.js"></script>
+  <script src="scripts/db.js"></script>
+  <script src="scripts/controllers/home.js"></script>
+  <script src="scripts/controllers/index.js"></script>
+  <script src="scripts/services/notification-service.js"></script>
+  <script src="scripts/services/storage-service.js"></script>
+  <script src="scripts/services/location-factory.js"></script>
+  <script src="scripts/services/utility.js"></script>
+  <script src="scripts/services/i18n.js"></script>
+  <script src="scripts/services/sync-service.js"></script>
+  <script src="scripts/services/device-info-factory.js"></script>
+  <script src="scripts/services/alert-factory.js"></script>
+  <script src="scripts/services/cache-service.js"></script>
+  <script src="scripts/services/tracking-service.js"></script>
+  <script src="scripts/services/fixture-loader-service.js"></script>
+  <script src="scripts/services/pouch-storage-service.js"></script>
+  <script src="scripts/services/memory-storage-service.js"></script>
+  <script src="scripts/services/background-sync-service.js"></script>
+  <script src="scripts/services/pouch-migration-service.js"></script>
+  <script src="scripts/services/chrome-storage-api.js"></script>
+  <script src="scripts/services/analytics-sync-service.js"></script>
+  <script src="scripts/directives/i18n.js"></script>
+  <script src="scripts/directives/analytics.js"></script>
+  <script src="scripts/decorators/exceptionhandler-decorator.js"></script>
+  <!-- endbuild -->
+</body>
+</html>

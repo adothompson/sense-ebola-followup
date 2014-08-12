@@ -1,0 +1,263 @@
+html, body {
+  overflow: auto;
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  padding-top: 70px;
+  margin-bottom: 60px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
+.center-text{
+    text-align: center;
+}
+.inline-label{
+    display: inline;
+}
+#vm1-table thead tr th{
+    font-size: 11px;
+}
+#sm-header-text{
+    font-size: 11px;
+}
+#max-stock, #min-stock, .top-rows{
+    font-size: 11px;
+}
+
+.scrollable-container{
+    width: 100%;
+    height: fit-content;
+    overflow-x: scroll;
+}
+
+.oversize-table{
+   width: 2000px;
+}
+
+.danger-alert{
+    color: #B94A48;
+    background-color: #F3DEDE;
+    border-color: #F2DEDE;
+    font-weight: bold;
+}
+.warning-alert{
+    color: #C09853;
+    background-color: #FCF8E3;
+    border-color: #EED3D7;
+    font-weight: bold;
+}
+.about-to-expire{
+    background-color: #FFD300;
+}
+.green-icon{
+    background-color: #FFFFFF;
+    color: green;
+}
+.red-icon{
+    background-color: #FFFFFF;
+    color: #C00;
+    color: red;
+}
+.marker-indicator-space{
+  margin-right: 2em;
+}
+.sequence-map-box{
+  background: #D4D4D4;
+  color: #ffffff;
+}
+.info-box-number{
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    padding-top: 10px;
+    float: left;
+}
+.info-box-text{
+    margin-left: 50px;
+}
+.info-box .one{
+    background: #D4D4D4;
+    color: #ffffff;
+}
+.info-box .two{
+    background: #A7A7A7;
+    color: #ffffff;
+}
+.info-box .three{
+    background: #7A7A7A;
+    color: #ffffff;
+}
+.info-box .four{
+    background: #424B43;
+    color: #ffffff;
+}
+.form-label{
+    font-weight: bold;
+}
+.w-menu{
+    padding: 10px;
+    position: relative;
+}
+.w-menu li{
+    padding: 4px 0px;
+    border: #ffffff solid 1px;
+
+}
+accordion .panel-heading:hover {
+    cursor: pointer;
+}
+.removeIcon i:hover{
+  color: red;
+}
+.products accordion .panel-heading .panel-title i:hover {
+    color: red;
+}
+.date-row{
+    margin: 10px 0px;
+}
+.new-line{
+  display: block;
+}
+.btn-separator{
+    margin-top: 2.5em;
+}
+.btn-separator-xs{
+    margin-top: 1.25em;
+}
+.fa-5-3x {
+  font-size: 5.3em;
+}
+.lmis-block{
+    width: 100%;
+    display: block;
+}
+.text-capitalize {
+  text-transform: capitalize;
+}
+@media (min-width: 768px) {
+  .navbar-nav > li > a:last-child {
+    padding-right: 0
+  }
+}
+.counter-btn {
+   font-size: 25.5pt;
+   padding: 0.1em, 0.2em;
+   height: 2.2em;
+}
+.counter-input{
+  padding: 0em;
+  height: 4em;
+}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#wasteCountReason-1, #wasteCountReason-2{
+    top: 10px;
+}
+.custom-error{
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 2px;
+    margin-top: 2px;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+}
+.center-block {float: none !important}
+.pull-right-xs{
+    float: right !important;
+}
+@media (max-width: 767px){
+  .pull-right-xs{
+    float: none !important;
+  }
+}
+.pointer{
+    cursor: pointer;
+}
+.main-activity-link{
+    display: block;
+    word-wrap: break-word;
+}
+a.accordion-toggle{
+  display: block;
+}
+td div.child-margin{
+    margin-left: 30px;
+}
+tr.td-header{
+    background: #F9F9F9;
+}
+h1.discarded-figure{
+    font-size: 5em;
+}
+tr.disabled, tr.disabled span.text-info{
+    color: #ccc;
+}
+.splash-img{
+  max-width:  50%;
+  max-height: 50%;
+}
+.btn-right{
+  padding-left: 0.5em;
+}
+.btn-left{
+   padding-right: 0.5em;
+}
+.panel-stock-levels {
+  max-height: 300px;
+}
+.reminder-icon {
+  width: 32px;
+  height: 32px;
+}
+.product-chart {
+  margin: 0 auto;
+  padding-left: 0px;
+  max-height: 240px;
+}
+.highlight-selected-item {
+  background-color: #449d44;
+  color: #FFFFFF;
+}
+.small-font{
+  font-size: 0.85em;
+}
+.no-bold{
+  font-weight: normal;
+}
+.bold-text{
+  font-weight: bold;
+}
+.cold-store-vaccines>.panel-heading{
+  background-color: #157085;
+  color: #FFFFFF;
+}
+.cold-store-vaccines{
+  border-color: #157085;
+}
+.dry-store-safety-boxes>.panel-heading, .dry-store-syringes>.panel-heading{
+  background-color: #8B4A09;
+  color: #FFFFFF;
+}
+.dry-store-safety-boxes, .dry-store-syringes{
+  border-color: #8B4A09;
+  font-weight: bold;
+}
+.growl-container.growl-fixed {
+  width: 90%;
+  max-width: 400px;
+}
+.padded-label{
+    padding: 10px 15px;
+}
+.no-padding{
+    padding: 0px;
+}
