@@ -5,17 +5,6 @@ angular.module('lmisChromeApp')
 
     var PATH = 'scripts/fixtures/';
     var REMOTE_URI = config.api.url;
-    this.REMOTE_FIXTURES = [
-      storageService.UOM,
-      storageService.UOM_CATEGORY,
-      storageService.PRODUCT_TYPES,
-      storageService.PRODUCT_CATEGORY,
-      storageService.PRODUCT_PRESENTATION,
-      storageService.CCEI,
-      storageService.MODE_OF_ADMINISTRATION,
-      storageService.PRODUCT_FORMULATIONS,
-      storageService.PRODUCT_PROFILES
-    ];
 
     /**
      *  loads database from remote db.
@@ -35,6 +24,7 @@ angular.module('lmisChromeApp')
       };
       return db.info()
         .then(function() {
+          console.log('am here');
           return db.query({map: map}, {reduce: false})
             .then(function(res) {
               var data = res.rows;
@@ -43,7 +33,7 @@ angular.module('lmisChromeApp')
                 var record = data[i].key;
                 dbRecords.push(record);
               }
-              return utility.castArrayToObject(dbRecords, 'uuid');
+              return utility.castArrayToObject(dbRecords, '_id');
             });
         });
     };
@@ -63,6 +53,8 @@ angular.module('lmisChromeApp')
       }
       return $q.all(promises);
     };
+
+    this.loadRemoteDB = loadDatabasesFromRemote;
 
     /**
      * This saves databases to the local storage.

@@ -11,8 +11,37 @@ angular.module('lmisChromeApp', [
     'ngAnimate',
     'db'
   ])
-  .run(function($state) {
-    $state.go('home.index.home.mainActivity');
+  .run(function($state, fixtureLoaderService, contactService, growl, storageService) {
+    var initializeContactDB = function() {
+      return fixtureLoaderService.loadRemoteDB(['sense_contacts'])
+        .then(function(res) {
+          fixtureLoaderService.saveDatabases(res)
+            .then(function(res) {
+              return res
+            });
+        });
+    };
+
+    contactService.all()
+      .then(function(contacts) {
+        if (contacts.length > 0) {
+          $state.go('home.index.home.mainActivity');
+        } else {
+          initializeContactDB()
+            .then(function() {
+              $state.go('home.index.home.mainActivity');
+            })
+            .catch(function(err) {
+              console.error(err);
+              growl.error('Downloading contacts failed, contact support.')
+            });
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+        growl.error('Error occurred while reading contacts database, contact support.');
+      });
+
   })
   .config(function($compileProvider) {
     // to bypass Chrome app CSP for images.

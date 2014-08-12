@@ -17,12 +17,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: bowerJS.concat([
-      'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js',
-      'app/views/templates/*.html'
-    ]),
+    files: bowerJS.concat('app/scripts/**/*.js'),
 
     // list of files / patterns to exclude
     exclude: [
@@ -60,8 +55,7 @@ module.exports = function(config) {
       'coverage'
     ],
     preprocessors: {
-      'app/scripts/**/*.js': 'coverage',
-      'app/views/templates/*.html': 'ng-html2js'
+      'app/scripts/**/*.js': 'coverage'
     },
     coverageReporter: {
       type: 'lcov',

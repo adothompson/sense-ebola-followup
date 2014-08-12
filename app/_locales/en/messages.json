@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Sense Ebola"
+    "message": "eHealth Sense"
   },
   "appDescription": {
     "message": "Ebola patient tracing system."
@@ -69,6 +69,27 @@
     "message": "Back"
   },
   "symptomsQuestionnaire": {
-    "message": "Symptoms' Questionnaire"
+    "message": "Questionnaire"
+  },
+  "enterContactIdError": {
+    "message": "Please, enter Contact ID and try again."
+  },
+  "address": {
+    "message": "Address"
+  },
+  "followup": {
+    "message": "Followup"
+  },
+  "contactPersonNotFound": {
+    "message": "Contact person not found, check the name or update your contact list."
+  },
+  "phoneNo": {
+    "message": "Phone No."
+  },
+  "reportFailedMsg": {
+    "message": "Report submission failed, try again, if it persists, contact support."
+  },
+  "reportSuccessMsg": {
+    "message": "Report submitted successfully."
   }
 }

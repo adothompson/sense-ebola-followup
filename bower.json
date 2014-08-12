@@ -1,6 +1,6 @@
 {
-  "name": "sense-ebola-followup",
-  "version": "0.0.1",
+  "name": "eHealth Sense - Followup",
+  "version": "0.0.2",
   "dependencies": {
     "angular": "~1.2.20",
     "angular-bootstrap": "~0.11.0",

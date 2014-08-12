@@ -1,6 +1,6 @@
 {
-  "name": "sense-ebola-followup",
-  "version": "0.0.1",
+  "name": "eHealth Sense - Followup",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {},
   "devDependencies": {

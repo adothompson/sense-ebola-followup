@@ -1,17 +1,22 @@
-<div class="col-sm-15" ng-if="showInfo !== true">
+<div class="col-sm-15" ng-show="showInfo !== true">
     <form role="form">
         <div class="form-group">
-            <label i18n="contactId"></label>
-            <input type="number"
-                   ng-model="patientIdNo"
+            <label>Contact Name</label>
+            <input type="text"
+                   ng-model="contactId"
+                   typeahead="name for name in contactNames | filter:$viewValue | limitTo:10"
                    class="form-control"
                    required="true"
-                   placeholder="Enter contact id.">
+                   placeholder="Enter contact name.">
         </div>
         <button type="button"
-                ng-click="getPatientInfo()"
+                ng-click="getContactInfo()"
                 class="btn btn-info btn-lg btn-block"
-                i18n="submit">
+                ng-disabled="isLoading === true">
+            <i ng-if="isLoading !== true" class="fa fa-chevron-circle-right"></i>
+            <span ng-if="isLoading !== true" i18n="followup"></span>
+            <span ng-if="isLoading === true" i18n="loading"></span>
+            <i ng-if="isLoading === true" class="fa fa-spinner fa-spin"></i>
         </button>
     </form>
 </div>
@@ -24,6 +29,7 @@
     <span i18n="back"></span>
 </button>
 <br/>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
@@ -33,20 +39,20 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <label i18n="contactId"></label><br/>
-            <span>12345-89-HKA</span>
-        </div>
-        <div class="form-group">
             <label i18n="nameOfContact"></label><br/>
-            <span>Mr ABC DEF</span>
+            <span>{{ contactPerson.Surname }} {{ contactPerson.OtherNames }}</span>
         </div>
         <div class="form-group">
             <label i18n="lgaName"></label><br/>
-            <span>Agege</span>
+            <span ng-bind="contactPerson.LGA"></span>
         </div>
         <div class="form-group">
-            <label i18n="gpsCoords"></label><br/>
-            <span>Lat: 11.19101001, Long: 8.982182</span>
+            <label i18n="address"></label><br/>
+            <span ng-bind="contactPerson.Address"></span>
+        </div>
+        <div class="form-group">
+            <label i18n="phoneNo"></label><br/>
+            <span ng-bind="contactPerson.Phone"></span>
         </div>
     </div>
 </div>
@@ -63,166 +69,163 @@
                 <label>Temperature reading (in degree celsius)?</label>
                 <input type="number"
                        class="form-control"
-                       placeholder="Enter temp. reading in degree celsius."/>
+                       ng-model="(dailyVisit.symptoms).temperature"/>
+                <span class="help-block">Enter temperature reading in degree celsius.</span>
             </div>
         </div>
         <div class="list-group-item">
-            <div class="col-md-12">
+            <div class="col-md-15">
                 <label>Any sign of Malaise?</label>
-            </div>
-            <div class="col-md-15 pull-right">
-                <label class="input-control">
-                    <input type="radio" name="fever"
-                           ng-value="true"/>
+                <label class="radio-inline">
+                    <input type="radio"
+                           ng-value="true"
+                           ng-model="(dailyVisit.symptoms).malaise"/>
                     <span i18n="yes"></span>
                 </label>
-                <label class="input-control">
-                    <input type="radio" name="fever"
-                           ng-value="false">
+                <label class="radio-inline">
+                    <input type="radio"
+                           ng-value="false"
+                           ng-model="(dailyVisit.symptoms).malaise"/>
                     <span i18n="no"></span>
                 </label>
             </div>
-            <div class="panel-body"></div>
         </div>
         <div class="list-group-item">
-            <div class="col-md-12">
+            <div class="col-md-15">
                 <label>Any sign of Muscle pain?</label>
-            </div>
-            <div class="col-md-15 pull-right">
-                <label class="input-control">
-                    <input type="radio" name="fever"
-                           ng-value="true"/>
+                <label class="radio-inline">
+                    <input type="radio"
+                           ng-value="true"
+                           ng-model="(dailyVisit.symptoms).musclePain"/>
                     <span i18n="yes"></span>
                 </label>
-                <label class="input-control">
-                    <input type="radio" name="fever"
-                           ng-value="false">
+                <label class="radio-inline">
+                    <input type="radio"
+                           ng-value="false"
+                           ng-model="(dailyVisit.symptoms).musclePain"/>
                     <span i18n="no"></span>
                 </label>
             </div>
-            <div class="panel-body"></div>
         </div>
         <div class="list-group-item">
-            <div class="col-md-12">
+            <div class="col-md-15">
                 <label>Any sign of Headache?</label>
-            </div>
-            <div class="col-md-15 pull-right">
-                <label class="input-control">
-                    <input type="radio" name="fever"
+                <label class="radio-inline">
+                    <input type="radio"
+                           ng-model="(dailyVisit.symptoms).headache"
                            ng-value="true"/>
                     <span i18n="yes"></span>
                 </label>
-                <label class="input-control">
-                    <input type="radio" name="fever"
+                <label class="radio-inline">
+                    <input type="radio"
+                           ng-model="(dailyVisit.symptoms).headache"
                            ng-value="false">
                     <span i18n="no"></span>
                 </label>
             </div>
-            <div class="panel-body"></div>
         </div>
     </div>
     <div class="list-group-item">
-        <div class="col-md-12">
+        <div class="col-md-15">
             <label>Any sign of Pharyngitis?</label>
-        </div>
-        <div class="col-md-15 pull-right">
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).pharyngitis"
                        ng-value="true"/>
                 <span i18n="yes"></span>
             </label>
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).pharyngitis"
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
         </div>
-        <div class="panel-body"></div>
     </div>
     <div class="list-group-item">
-        <div class="col-md-12">
+        <div class="col-md-15">
             <label>Any Vomiting?</label>
-        </div>
-        <div class="col-md-15 pull-right">
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).vomiting"
                        ng-value="true"/>
                 <span i18n="yes"></span>
             </label>
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).vomiting"
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
         </div>
-        <div class="panel-body"></div>
     </div>
     <div class="list-group-item">
-        <div class="col-md-12">
+        <div class="col-md-15">
             <label>Any Diarrhoea?</label>
-        </div>
-        <div class="col-md-15 pull-right">
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).diarrhoea"
                        ng-value="true"/>
                 <span i18n="yes"></span>
             </label>
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).diarrhoea"
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
         </div>
-        <div class="panel-body"></div>
     </div>
     <div class="list-group-item">
-        <div class="col-md-12">
+        <div class="col-md-15">
             <label>Any Maculopapular Rash?</label>
-        </div>
-        <div class="col-md-15 pull-right">
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).maculopapular"
                        ng-value="true"/>
                 <span i18n="yes"></span>
             </label>
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).maculopapular"
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
         </div>
-        <div class="panel-body"></div>
     </div>
     <div class="list-group-item">
-        <div class="col-md-12">
+        <div class="col-md-15">
             <label>Any Haemorrhagic signs?</label>
-        </div>
-        <div class="col-md-15 pull-right">
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).haemorrhagic"
                        ng-value="true"/>
                 <span i18n="yes"></span>
             </label>
-            <label class="input-control">
-                <input type="radio" name="fever"
+            <label class="radio-inline">
+                <input type="radio"
+                       ng-model="(dailyVisit.symptoms).haemorrhagic"
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
         </div>
-        <div class="panel-body"></div>
     </div>
     <div class="list-group-item">
-        <div class="col-md-12">
+        <div class="col-md-15">
             <label>Comment on contact</label>
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control"
+                      rows="3"
+                      ng-model="dailyVisit.comment"></textarea>
         </div>
     </div>
 </div>
 <button type="button"
         ng-click="reportDailyVisit()"
         class="btn btn-success btn-lg btn-block">
-    <i class="fa fa-plus-circle"></i>
-    <span>Report Daily Visit</span>
+    <i class="fa fa-plus-circle" ng-show="isReporting === false"></i>
+    <span ng-show="isReporting === false">Report Daily Visit</span>
+    <span ng-if="isReporting === true" i18n="loading"></span>
+    <i ng-if="isReporting === true" class="fa fa-spinner fa-spin"></i>
 </button>
 <br/>
 </div>
