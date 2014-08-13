@@ -34,8 +34,8 @@ angular.module('lmisChromeApp')
        * @private
        */
       var setData = function (table, data) {
-        if(!data.hasOwnProperty('uuid')){
-          throw 'data should have a uuid or primary key field.';
+        if(!data.hasOwnProperty('_id')){
+          throw 'data should have a _id or primary key field.';
         }
         return pouchStorageService.put(table, data)
           .then(function(result) {
@@ -57,10 +57,10 @@ angular.module('lmisChromeApp')
        * @param uuid
        * @returns {promise|Function|promise|promise|promise|*}
        */
-      var removeRecordFromTable = function(tableName, uuid){
-        return pouchStorageService.get(tableName, uuid)
+      var removeRecordFromTable = function(tableName, _id){
+        return pouchStorageService.get(tableName, _id)
           .then(function(doc) {
-            return pouchStorageService.remove(tableName, uuid, doc._rev);
+            return pouchStorageService.remove(tableName, _id, doc._rev);
           });
       };
 
@@ -96,10 +96,10 @@ angular.module('lmisChromeApp')
        * @returns {Promise}
        */
       var insertData = function(table, data) {
-        if(data.hasOwnProperty('uuid')){
+        if(data.hasOwnProperty('_id')){
           throw 'insert should only be called with fresh record that has not uuid or primary key field.';
         }
-        data.uuid = utility.uuidGenerator();
+        data._id = utility.uuidGenerator();
         data.created = data.modified = utility.getDateTime();
         return setData(table, data);
       };
@@ -112,7 +112,7 @@ angular.module('lmisChromeApp')
        * @returns {Promise}
        */
       var updateData = function(table, data, updateDateModified) {
-        if(!data.hasOwnProperty('uuid')){
+        if(!data.hasOwnProperty('_id')){
           throw 'update should only be called with data that has UUID or primary key already.';
         }
         if(updateDateModified !== false){
@@ -124,7 +124,7 @@ angular.module('lmisChromeApp')
         // Rather than introducing an intermediary `get`, the callee should pass
         // `_rev` itself; it should be considered a first-class citizen as with
         // `uuid/_id`, see item:710.
-        return pouchStorageService.get(table, data.uuid)
+        return pouchStorageService.get(table, data._id)
           .then(function(doc) {
             data._rev = doc._rev;
             return setData(table, data);
@@ -143,7 +143,7 @@ angular.module('lmisChromeApp')
        */
       var saveData = function(table, data) {
         if ((typeof data === 'object') && (data !== null)) {
-          if (Object.keys(data).indexOf('uuid') !== -1 && data.uuid.length > 0) {
+          if (Object.keys(data).indexOf('_id') !== -1 && data._id.length > 0) {
             return updateData(table, data);
           } else {
             return insertData(table, data);
@@ -206,8 +206,8 @@ angular.module('lmisChromeApp')
 
       var validateBatch = function(batch) {
         var now = utility.getDateTime();
-        if (!utility.has(batch, 'uuid')) {
-          batch.uuid = utility.uuidGenerator();
+        if (!utility.has(batch, '_id')) {
+          batch._id = utility.uuidGenerator();
           batch.created = now;
         }
         batch.modified = now;

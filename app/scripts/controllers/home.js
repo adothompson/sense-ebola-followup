@@ -7,7 +7,12 @@ angular.module('lmisChromeApp')
     $stateProvider
       .state('home', {
         parent: 'root.index',
-        templateUrl: 'views/home/index.html'
+        templateUrl: 'views/home/index.html',
+        resolve: {
+          contacts: function(contactService) {
+            return contactService.contactGroupedByName();
+          }
+        }
       })
       .state('home.index', {
         abstract: true,
@@ -29,15 +34,10 @@ angular.module('lmisChromeApp')
         data: {
           label: 'Home'
         },
-        resolve: {
-          contacts: function(contactService) {
-            return contactService.contactGroupedByName();
-          }
-        },
         views: {
           'activities': {
             templateUrl: 'views/home/main-activity.html',
-            controller: function($scope, $state, growl, i18n, contacts, contactService) {
+            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService) {
 
               var init = function() {
                 $scope.contactId = '';
@@ -47,15 +47,21 @@ angular.module('lmisChromeApp')
                 $scope.contactObj = contacts;
                 $scope.contactNames = Object.keys($scope.contactObj);
                 $scope.dailyVisit = {
-                  symptoms: {},
+                  symptoms: {
+                    diarrhoea: undefined,
+                    haemorrhagic: undefined,
+                    headache: undefined,
+                    maculopapular: undefined,
+                    malaise: undefined,
+                    musclePain: undefined,
+                    pharyngitis: undefined,
+                    temperature: undefined,
+                    vomiting: undefined
+                  },
                   dateOfVisit: new Date().toJSON(),
-                  gpsCoords: {
-                    lat: 0.0,
-                    long: 0.0,
-                    altitude: 0,
-                    accuracy: 21
-                  }
+                  geoInfo: {}
                 };
+                $scope.invalid = {};
               };
 
               init();
@@ -78,19 +84,84 @@ angular.module('lmisChromeApp')
                 }
               };
 
+              var isInvalid = function(value) {
+                return (isNaN(value) || value === '');
+              };
+
+              var isValidate = function(dailyVisit) {
+                var numberOfQuestions = 9;
+                var invalids = {};
+                var questionnaire = Object.keys(dailyVisit.symptoms);
+                if (questionnaire.length !== numberOfQuestions) {
+                  return {
+                    diarrhoea: true,
+                    haemorrhagic: true,
+                    headache: true,
+                    maculopapular: true,
+                    malaise: true,
+                    musclePain: true,
+                    pharyngitis: true,
+                    temperature: true,
+                    vomiting: true
+                  };
+                }
+
+                for (var type in dailyVisit.symptoms) {
+                  var value = dailyVisit.symptoms[type];
+                  if (type === 'temperature' && isInvalid(value)) {
+                    invalids[type] = true;
+                  } else {
+                    if (type !== 'temperature' && value !== true && value !== false) {
+                      invalids[type] = true;
+                    }
+                  }
+                }
+                return invalids;
+              };
+
               $scope.reportDailyVisit = function() {
                 //TODO: validate daily visit and save info
                 $scope.isReporting = true;
                 if (!angular.isArray($scope.contactPerson.dailyVisits)) {
                   $scope.contactPerson.dailyVisits = [];
                 }
-                $scope.contactPerson.dailyVisits.push($scope.dailyVisit);
+                var invalids = isValidate($scope.dailyVisit);
+                $scope.invalid = invalids;
 
-                contactService.save($scope.contactPerson)
+                if (Object.keys(invalids).length > 0) {
+                  growl.error('Please, correct or answer question(s) marked with red comment.');
+                  $scope.isReporting = false;
+                } else {
+                  var contact = angular.copy($scope.contactPerson);
+                  locationFactory.getCurrentPosition()
+                    .then(function(res) {
+                      $scope.dailyVisit.geoInfo = res;
+                      $scope.contactPerson.dailyVisits.push($scope.dailyVisit);
+                      saveDailyVisits(contact);
+                    })
+                    .catch(function(err) {
+                      console.info(err);
+                      saveDailyVisits(contact);
+                    });
+                }
+              };
+
+              var saveDailyVisits = function(contact) {
+                contactService.save(contact)
                   .then(function() {
-                    init();
-                    $state.go('home.index.home.mainActivity');
-                    growl.success(i18n('reportSuccessMsg'));
+                    syncService.syncUpRecord(contactService.CONTACT_DB, contact)
+                      .then(function(){
+                        growl.success(i18n('reportSubmitAndSyncSuccessMsg'));
+                      })
+                      .catch(function(err){
+                        console.log(err);
+                        growl.success(i18n('reportSuccessMsg'));
+                      })
+                      .finally(function() {
+                        console.info('syncing attempt completed.');
+                        init();
+                        $state.go('home.index.home.mainActivity');
+                      });
                   })
                   .catch(function(reason) {
                     growl.error(i18n('reportFailedMsg'));
@@ -104,6 +175,7 @@ angular.module('lmisChromeApp')
               $scope.showForm = function() {
                 $scope.showInfo = false;
                 $scope.isLoading = false;
+                $scope.invalid = {};
               };
 
             }

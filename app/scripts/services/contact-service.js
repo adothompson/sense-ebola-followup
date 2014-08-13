@@ -2,18 +2,19 @@
 
 angular.module('lmisChromeApp')
   .service('contactService', function ($q, storageService) {
-    var CONTACT_DB = 'sense_contacts';
+
+    this.CONTACT_DB = 'sense_contacts';
 
     this.save = function(contact){
-      return storageService.save(CONTACT_DB, contact);
+      return storageService.save(this.CONTACT_DB, contact);
     };
 
     this.get =  function(id){
-      return storageService.get(CONTACT_DB, id);
+      return storageService.get(this.CONTACT_DB, id);
     };
 
     this.all = function(){
-      return storageService.all(CONTACT_DB);
+      return storageService.all(this.CONTACT_DB);
     };
 
     this.contactGroupedByName = function(){

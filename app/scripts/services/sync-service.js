@@ -20,25 +20,25 @@ angular.module('lmisChromeApp')
     /**
      * @private
      * @param {String} dbName
-     * @param {Object} doc - expected to have uuid property.
+     * @param {Object} doc - expected to have _id property.
      * @returns {*}
      */
     var syncUp = function(dbName, doc) {
-      if (typeof doc.uuid !== 'string') {
-        throw new Error('document\'s uuid is not a string.');
+      if (typeof doc._id !== 'string') {
+        throw new Error('document\'s _id is not a string.');
       }
       if (typeof dbName !== 'string') {
         throw new Error('database name is not a string.');
       }
       doc.dateSynced = new Date().toJSON();//update sync date
       var db = pouchStorageService.getRemoteDB(dbName);
-      return db.get(doc.uuid)
+      return db.get(doc._id)
         .then(function(response) {
           doc._id = response._id;
           doc._rev = response._rev;
           return db.put(doc, response._id, response._rev);
         }).catch(function() {
-          return db.put(doc, doc.uuid);
+          return db.put(doc, doc._id);
         });
     };
 
@@ -59,8 +59,8 @@ angular.module('lmisChromeApp')
       if (!angular.isString(pendingSync.dbName)) {
         throw new Error('dbName is undefined or not a string');
       }
-      if (!angular.isString(pendingSync.uuid)) {
-        throw new Error('record.uuid is undefined or not a string.');
+      if (!angular.isString(pendingSync._id)) {
+        throw new Error('record._id is undefined or not a string.');
       }
       return storageService.save(storageService.PENDING_SYNCS, pendingSync);
     };
@@ -72,7 +72,7 @@ angular.module('lmisChromeApp')
      * @returns {*|Promise|Promise|!Promise}
      */
     var syncUpDoc = function(dbName, doc) {
-      var pendingSync = { dbName: dbName, uuid: doc.uuid };
+      var pendingSync = { dbName: dbName, _id: doc._id };
       if (deviceInfoFactory.isOnline()) {
         return syncUpAndUpdateLocal(dbName, doc)
           .catch(function(reason) {
@@ -115,7 +115,7 @@ angular.module('lmisChromeApp')
     };
 
     /**
-     * @param {Object} pendingSync - with string dbName and uuid property.
+     * @param {Object} pendingSync - with string dbName and _id property.
      * @returns {*|Promise|Promise}
      */
     this.addToPendingSync = function(pendingSync) {

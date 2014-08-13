@@ -90,6 +90,15 @@
     "message": "Report submission failed, try again, if it persists, contact support."
   },
   "reportSuccessMsg": {
-    "message": "Report submitted successfully."
+    "message": "Report saved successfully, but not synced."
+  },
+  "answerErrorMsg": {
+    "message": "Answer by selecting Yes or No"
+  },
+  "reportSubmitAndSyncSuccessMsg": {
+    "message": "Report saved and synced successfully."
+  },
+  "updatingList": {
+    "message": "Updating ..."
   }
 }

@@ -24,7 +24,6 @@ angular.module('lmisChromeApp')
       };
       return db.info()
         .then(function() {
-          console.log('am here');
           return db.query({map: map}, {reduce: false})
             .then(function(res) {
               var data = res.rows;

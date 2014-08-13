@@ -12,7 +12,7 @@ angular.module('lmisChromeApp')
         views: {
           'header': {
             templateUrl: 'views/index/header.html',
-            controller: function($scope, $window, i18n, deviceInfoFactory, backgroundSyncService) {
+            controller: function($scope, $window, i18n, deviceInfoFactory) {
 
               $scope.states = {
                 online: i18n('online'),
@@ -29,13 +29,6 @@ angular.module('lmisChromeApp')
                     label: $scope.states[e.type]
                   };
                   $scope.$digest();
-
-                  //trigger background syncing
-                  backgroundSyncService.startBackgroundSync()
-                    .finally(function() {
-                      console.log('updateAppConfigAndStartBackgroundSync  triggered on device connection ' +
-                        'status change has been completed.');
-                    });
 
                 }, false);
               };

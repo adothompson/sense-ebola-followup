@@ -71,6 +71,8 @@
                        class="form-control"
                        ng-model="(dailyVisit.symptoms).temperature"/>
                 <span class="help-block">Enter temperature reading in degree celsius.</span>
+                    <span class="help-block alert-danger"
+                          ng-show="invalid.temperature === true">Enter a number as temperature reading, e.g 29.6</span>
             </div>
         </div>
         <div class="list-group-item">
@@ -88,6 +90,9 @@
                            ng-model="(dailyVisit.symptoms).malaise"/>
                     <span i18n="no"></span>
                 </label>
+                    <span class="help-block alert-danger"
+                          i18n="answerErrorMsg"
+                          ng-show="invalid.malaise === true"></span>
             </div>
         </div>
         <div class="list-group-item">
@@ -105,6 +110,9 @@
                            ng-model="(dailyVisit.symptoms).musclePain"/>
                     <span i18n="no"></span>
                 </label>
+                    <span class="help-block alert-danger"
+                          i18n="answerErrorMsg"
+                          ng-show="invalid.musclePain === true"></span>
             </div>
         </div>
         <div class="list-group-item">
@@ -122,6 +130,9 @@
                            ng-value="false">
                     <span i18n="no"></span>
                 </label>
+                    <span class="help-block alert-danger"
+                          i18n="answerErrorMsg"
+                          ng-show="invalid.headache === true"></span>
             </div>
         </div>
     </div>
@@ -140,6 +151,9 @@
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
+                <span class="help-block alert-danger"
+                      i18n="answerErrorMsg"
+                      ng-show="invalid.pharyngitis === true"></span>
         </div>
     </div>
     <div class="list-group-item">
@@ -157,6 +171,9 @@
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
+                <span class="help-block alert-danger"
+                      i18n="answerErrorMsg"
+                      ng-show="invalid.vomiting === true"></span>
         </div>
     </div>
     <div class="list-group-item">
@@ -174,6 +191,10 @@
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
+                <span class="help-block alert-danger"
+                      i18n="answerErrorMsg"
+                      ng-show="invalid.diarrhoea === true">
+                </span>
         </div>
     </div>
     <div class="list-group-item">
@@ -190,7 +211,12 @@
                        ng-model="(dailyVisit.symptoms).maculopapular"
                        ng-value="false">
                 <span i18n="no"></span>
+                {{ invalid.maculopapular }}
             </label>
+                <span class="help-block alert-danger"
+                      i18n="answerErrorMsg"
+                      ng-show="invalid.maculopapular === true">
+                </span>
         </div>
     </div>
     <div class="list-group-item">
@@ -208,6 +234,10 @@
                        ng-value="false">
                 <span i18n="no"></span>
             </label>
+                <span class="help-block alert-danger"
+                      i18n="answerErrorMsg"
+                      ng-show="invalid.haemorrhagic === true">
+                </span>
         </div>
     </div>
     <div class="list-group-item">
@@ -227,7 +257,6 @@
     <span ng-if="isReporting === true" i18n="loading"></span>
     <i ng-if="isReporting === true" class="fa fa-spinner fa-spin"></i>
 </button>
-<br/>
 </div>
 
 <ui-view/>
