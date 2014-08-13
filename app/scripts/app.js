@@ -11,15 +11,17 @@ angular.module('lmisChromeApp', [
     'ngAnimate',
     'db'
   ])
-  .run(function($state, fixtureLoaderService, contactService, growl) {
+  .run(function($state, fixtureLoaderService, contactService, growl, pouchStorageService) {
     var initializeContactDB = function() {
-      return fixtureLoaderService.loadRemoteDB(['sense_contacts'])
+      var databases = [contactService.CONTACT_DB];
+      return fixtureLoaderService.loadRemoteDB(databases)
         .then(function(res) {
           return fixtureLoaderService.saveDatabases(res);
         });
     };
 
     $state.go('loadingFixture');
+
     contactService.all()
       .then(function(contacts) {
         if (contacts.length > 0) {
