@@ -1,6 +1,6 @@
 {
-  "name": "eHealth Sense - Followup",
-  "version": "0.0.2",
+  "name": "ehealth-sense-followup",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {},
   "devDependencies": {
