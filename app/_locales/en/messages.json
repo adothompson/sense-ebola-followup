@@ -100,5 +100,23 @@
   },
   "updatingList": {
     "message": "Updating ..."
+  },
+  "backgroundSyncSuccessMsg": {
+    "message": "Background syncing attempt completed."
+  },
+  "dateLastContacted": {
+    "message": "Last visited"
+  },
+  "synced": {
+    "message": "Synced"
+  },
+  "interviewerName": {
+    "message": "Interviewer Name"
+  },
+  "contactName": {
+    "message": "Contact Name"
+  },
+  "interviewerNameError": {
+    "message": "Please, enter name of the interviewer."
   }
 }
