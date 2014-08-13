@@ -33,7 +33,7 @@
         <div class="panel-heading">
             <h1 class="panel-title">Last Visited Contacts - {{ today | date:'dd MMM, yyyy' }}</h1>
         </div>
-        <table class="table table-bordered table-striped table-condensed table-hover">
+        <table class="table table-bordered table-condensed table-hover">
             <thead>
             <tr>
                 <td>#</td>
@@ -43,7 +43,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="contact in contactList | limitTo:10">
+            <tr ng-repeat="contact in contactList | limitTo:10" ng-click="syncContact(contact)">
                 <td>{{ $index + 1 }}</td>
                 <td>{{ contact.Surname }} {{ contact.OtherNames }}</td>
                 <td>{{ getDate(contact.DateLastContact) | date:'dd MMM, yy' }}</td>

@@ -82,6 +82,15 @@ angular.module('lmisChromeApp')
                 return new Date(d).toJSON();
               };
 
+              $scope.syncContact = function(c){
+                if(c.synced !== true){
+                  syncService.syncUpRecord(contactService.CONTACT_DB, c)
+                    .then(function(){
+                      c.synced = true;
+                    });
+                }
+              };
+
               $scope.getContactInfo = function() {
                 $scope.isLoading = true;
 
