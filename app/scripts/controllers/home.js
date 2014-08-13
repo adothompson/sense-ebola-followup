@@ -41,6 +41,7 @@ angular.module('lmisChromeApp')
               $scope.today = new Date().toJSON();
               var init = function() {
                 $scope.contactId = '';
+                $scope.isSyncing = [];
                 $scope.interviewerName = '';
                 $scope.showInfo = false;
                 $scope.isLoading = false;
@@ -82,11 +83,15 @@ angular.module('lmisChromeApp')
                 return new Date(d).toJSON();
               };
 
-              $scope.syncContact = function(c){
+              $scope.syncContact = function(c, i){
                 if(c.synced !== true){
+                  $scope.isSyncing[i] = true;
                   syncService.syncUpRecord(contactService.CONTACT_DB, c)
                     .then(function(){
                       c.synced = true;
+                    })
+                    .finally(function(){
+                      $scope.isSyncing[i] = false;
                     });
                 }
               };
