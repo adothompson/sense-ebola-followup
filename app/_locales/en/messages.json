@@ -72,7 +72,7 @@
     "message": "Questionnaire"
   },
   "enterContactIdError": {
-    "message": "Please, enter Contact ID and try again."
+    "message": "Please, enter Contact name and try again."
   },
   "address": {
     "message": "Address"
