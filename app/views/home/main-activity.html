@@ -43,7 +43,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="contact in contactList | limitTo:10" ng-click="syncContact(contact)">
+            <tr ng-repeat="contact in contactList track by $index | limitTo:10" ng-click="syncContact(contact)">
                 <td>{{ $index + 1 }}</td>
                 <td>{{ contact.Surname }} {{ contact.OtherNames }}</td>
                 <td>{{ getDate(contact.DateLastContact) | date:'dd MMM, yy' }}</td>
