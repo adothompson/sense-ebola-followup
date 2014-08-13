@@ -31,7 +31,7 @@ angular.module('lmisChromeApp', [
             })
             .catch(function(err) {
               console.error(err);
-              growl.error('Downloading contacts failed, contact support.')
+              growl.error('Downloading contacts failed, contact support.');
             });
         }
       })
