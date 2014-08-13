@@ -31,11 +31,12 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1 class="panel-title">Last Visited Contacts</h1>
+            <h1 class="panel-title">Last Visited Contacts - {{ today | date:'dd MMM, yyyy' }}</h1>
         </div>
-        <table class="table table-bordered table-striped table-condensed">
+        <table class="table table-bordered table-striped table-condensed table-hover">
             <thead>
             <tr>
+                <td>#</td>
                 <th i18n="nameOfContact"></th>
                 <th i18n="dateLastContacted"></th>
                 <th i18n="synced"></th>
@@ -43,8 +44,9 @@
             </thead>
             <tbody>
             <tr ng-repeat="contact in contactList | limitTo:10">
+                <td>{{ $index + 1 }}</td>
                 <td>{{ contact.Surname }} {{ contact.OtherNames }}</td>
-                <td>{{ getDate(contact.DateLastContact) | date:'dd MMM, yyyy' }}</td>
+                <td>{{ getDate(contact.DateLastContact) | date:'dd MMM, yy' }}</td>
                 <td><i class="fa "
                        ng-class="{'fa-check-circle text-success': contact.synced, 'fa-times-circle text-danger': !contact.synced}">
 

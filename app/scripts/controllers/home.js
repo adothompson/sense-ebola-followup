@@ -38,7 +38,7 @@ angular.module('lmisChromeApp')
           'activities': {
             templateUrl: 'views/home/main-activity.html',
             controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility) {
-
+              $scope.today = new Date().toJSON();
               var init = function() {
                 $scope.contactId = '';
                 $scope.interviewerName = '';
