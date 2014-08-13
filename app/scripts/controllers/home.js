@@ -37,10 +37,11 @@ angular.module('lmisChromeApp')
         views: {
           'activities': {
             templateUrl: 'views/home/main-activity.html',
-            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService) {
+            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility) {
 
               var init = function() {
                 $scope.contactId = '';
+                $scope.interviewerName = '';
                 $scope.showInfo = false;
                 $scope.isLoading = false;
                 $scope.isReporting = false;
@@ -62,12 +63,34 @@ angular.module('lmisChromeApp')
                   geoInfo: {}
                 };
                 $scope.invalid = {};
+                var sortByDateLastContactedDesc = function(a, b) {
+                  return new Date(a.modified) < new Date(b.modified);
+                };
+                contactService.all()
+                  .then(function(res) {
+                    var contactList = res;
+                    contactList = contactList.filter(function(a) {
+                      return utility.has(a, 'modified');
+                    });
+                    $scope.contactList = contactList.sort(sortByDateLastContactedDesc);
+                  });
               };
 
               init();
 
+              $scope.getDate = function(d) {
+                return new Date(d).toJSON();
+              };
+
               $scope.getContactInfo = function() {
                 $scope.isLoading = true;
+
+                if (typeof $scope.interviewerName !== 'string' || ((typeof $scope.interviewerName === 'string') && $scope.interviewerName.length === 0)) {
+                  growl.error(i18n('interviewerNameError'));
+                  $scope.isLoading = false;
+                  return;
+                }
+
                 if (typeof $scope.contactId !== 'string' || ((typeof $scope.contactId === 'string') && $scope.contactId.length === 0)) {
                   growl.error(i18n('enterContactIdError'));
                   $scope.isLoading = false;
@@ -120,11 +143,12 @@ angular.module('lmisChromeApp')
               };
 
               $scope.reportDailyVisit = function() {
-                //TODO: validate daily visit and save info
+
                 $scope.isReporting = true;
                 if (!angular.isArray($scope.contactPerson.dailyVisits)) {
                   $scope.contactPerson.dailyVisits = [];
                 }
+                $scope.dailyVisit.interviewer = $scope.interviewerName;
                 var invalids = isValidate($scope.dailyVisit);
                 $scope.invalid = invalids;
 
@@ -133,6 +157,7 @@ angular.module('lmisChromeApp')
                   $scope.isReporting = false;
                 } else {
                   var contact = angular.copy($scope.contactPerson);
+                  contact.DateLastContact = new Date().toJSON();
                   locationFactory.getCurrentPosition()
                     .then(function(res) {
                       $scope.dailyVisit.geoInfo = res;
@@ -149,11 +174,11 @@ angular.module('lmisChromeApp')
               var saveDailyVisits = function(contact) {
                 contactService.save(contact)
                   .then(function() {
-                    syncService.syncUpRecord(contactService.CONTACT_DB, contact)
-                      .then(function(){
+                    return syncService.syncUpRecord(contactService.CONTACT_DB, contact)
+                      .then(function() {
                         growl.success(i18n('reportSubmitAndSyncSuccessMsg'));
                       })
-                      .catch(function(err){
+                      .catch(function(err) {
                         console.log(err);
                         growl.success(i18n('reportSuccessMsg'));
                       })

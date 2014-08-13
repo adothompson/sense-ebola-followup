@@ -1,7 +1,15 @@
 <div class="col-sm-15" ng-show="showInfo !== true">
     <form role="form">
         <div class="form-group">
-            <label>Contact Name</label>
+            <label i18n="interviewerName"></label>
+            <input type="text"
+                   ng-model="interviewerName"
+                   class="form-control"
+                   required="true"
+                   placeholder="Enter interviewer name.">
+        </div>
+        <div class="form-group">
+            <label i18n="contactName"></label>
             <input type="text"
                    ng-model="contactId"
                    typeahead="name for name in contactNames | filter:$viewValue | limitTo:10"
@@ -19,6 +27,32 @@
             <i ng-if="isLoading === true" class="fa fa-spinner fa-spin"></i>
         </button>
     </form>
+    <br/>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">Last Visited Contacts</h1>
+        </div>
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+            <tr>
+                <th i18n="nameOfContact"></th>
+                <th i18n="dateLastContacted"></th>
+                <th i18n="synced"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="contact in contactList | limitTo:10">
+                <td>{{ contact.Surname }} {{ contact.OtherNames }}</td>
+                <td>{{ getDate(contact.DateLastContact) | date:'dd MMM, yyyy' }}</td>
+                <td><i class="fa "
+                       ng-class="{'fa-check-circle text-success': contact.synced, 'fa-times-circle text-danger': !contact.synced}">
+
+                </i></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="col-sm-15" ng-if="showInfo === true">
