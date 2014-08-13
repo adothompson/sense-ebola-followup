@@ -11,7 +11,7 @@ angular.module('lmisChromeApp', [
     'ngAnimate',
     'db'
   ])
-  .run(function($state, fixtureLoaderService, contactService, growl, pouchStorageService) {
+  .run(function($state, fixtureLoaderService, contactService, growl) {
     var initializeContactDB = function() {
       var databases = [contactService.CONTACT_DB];
       return fixtureLoaderService.loadRemoteDB(databases)
