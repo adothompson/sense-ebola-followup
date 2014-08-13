@@ -11,14 +11,11 @@ angular.module('lmisChromeApp', [
     'ngAnimate',
     'db'
   ])
-  .run(function($state, fixtureLoaderService, contactService, growl, storageService) {
+  .run(function($state, fixtureLoaderService, contactService, growl) {
     var initializeContactDB = function() {
       return fixtureLoaderService.loadRemoteDB(['sense_contacts'])
         .then(function(res) {
-          fixtureLoaderService.saveDatabases(res)
-            .then(function(res) {
-              return res
-            });
+          return fixtureLoaderService.saveDatabases(res);
         });
     };
 
@@ -33,7 +30,7 @@ angular.module('lmisChromeApp', [
             })
             .catch(function(err) {
               console.error(err);
-              growl.error('Downloading contacts failed, contact support.')
+              growl.error('Downloading contacts failed, contact support.');
             });
         }
       })
