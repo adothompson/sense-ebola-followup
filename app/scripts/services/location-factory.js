@@ -3,10 +3,10 @@
 angular.module('lmisChromeApp')
   .factory('locationFactory', function($q, $window) {
 
-    var HALF_A_MIN = 30000;
+    var FIFTEEN_SECS = 15000;
     var FIVE_MINUTES = 300000;
     var geoOptions = {
-      timeout: HALF_A_MIN,
+      timeout: FIFTEEN_SECS,
       maximumAge: FIVE_MINUTES,
       enableHighAccuracy: false
     };
