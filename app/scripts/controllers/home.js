@@ -46,8 +46,14 @@ angular.module('lmisChromeApp')
                 $scope.showInfo = false;
                 $scope.isLoading = false;
                 $scope.isReporting = false;
-                $scope.contactObj = contacts;
+                $scope.contactObj = {};
                 $scope.contactNames = Object.keys($scope.contactObj);
+                contactService.contactGroupedByName()
+                  .then(function(res){
+                    $scope.contactObj = res;
+                    $scope.contactNames = Object.keys($scope.contactObj);
+                  })
+
                 $scope.dailyVisit = {
                   symptoms: {
                     diarrhoea: undefined,
@@ -187,23 +193,28 @@ angular.module('lmisChromeApp')
               };
 
               var saveDailyVisits = function(contact) {
-                contactService.save(contact)
+                var c = angular.copy(contact);
+                contactService.save(c)
                   .then(function() {
-                    return syncService.syncUpRecord(contactService.CONTACT_DB, contact)
+                    return syncService.syncUpRecord(contactService.CONTACT_DB, c)
                       .then(function() {
+                        $scope.isReporting = false;
                         growl.success(i18n('reportSubmitAndSyncSuccessMsg'));
                       })
                       .catch(function(err) {
+                        $scope.isReporting = false;
                         console.log(err);
                         growl.success(i18n('reportSuccessMsg'));
                       })
                       .finally(function() {
+                        $scope.isReporting = false;
                         console.info('syncing attempt completed.');
                         init();
                         $state.go('home.index.home.mainActivity');
                       });
                   })
                   .catch(function(reason) {
+                    $scope.isReporting = false;
                     growl.error(i18n('reportFailedMsg'));
                     console.error(reason);
                   })
