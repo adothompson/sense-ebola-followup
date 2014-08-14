@@ -53,6 +53,14 @@ angular.module('lmisChromeApp')
         parent: 'root.index',
         templateUrl: 'views/index/loading-fixture-screen.html',
         url: '/loading-fixture',
+        controller: function($rootScope, $state) {
+          $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from) {
+            var main = 'home.index.home.mainActivity';
+            if (from.name === main) {
+              $state.go(main);
+            }
+          });
+        }
       })
       .state('migrationScreen', {
         parent: 'root.index',
