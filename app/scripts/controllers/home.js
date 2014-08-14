@@ -175,11 +175,12 @@ angular.module('lmisChromeApp')
                   locationFactory.getCurrentPosition()
                     .then(function(res) {
                       $scope.dailyVisit.geoInfo = res;
-                      $scope.contactPerson.dailyVisits.push($scope.dailyVisit);
+                      contact.dailyVisits.push($scope.dailyVisit);
                       saveDailyVisits(contact);
                     })
                     .catch(function(err) {
                       console.info(err);
+                      contact.dailyVisits.push($scope.dailyVisit);
                       saveDailyVisits(contact);
                     });
                 }
