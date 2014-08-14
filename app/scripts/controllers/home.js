@@ -89,12 +89,13 @@ angular.module('lmisChromeApp')
                 return new Date(d).toJSON();
               };
 
+              $scope.getSyncStatus = function(c){
+                return syncService.getSyncStatus(c).synced;
+              }
+
               $scope.syncContact = function(c, i) {
                 $scope.isSyncing[i] = true;
                 syncService.syncUpRecord(contactService.CONTACT_DB, c)
-                  .then(function() {
-                    c.synced = true;
-                  })
                   .finally(function() {
                     $scope.isSyncing[i] = false;
                   });
