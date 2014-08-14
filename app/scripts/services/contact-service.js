@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('lmisChromeApp')
-  .service('contactService', function($q, storageService, syncService) {
+  .service('contactService', function($q, storageService, syncService, pouchdb, utility) {
 
-    this.CONTACT_DB = 'sense_contacts';
+    this.CONTACT_DB = 'new_sense';
 
     this.save = function(contact) {
       return storageService.save(this.CONTACT_DB, contact);
@@ -18,7 +18,7 @@ angular.module('lmisChromeApp')
 
     this.all = function() {
       return storageService.all(this.CONTACT_DB)
-        .then(function(contacts){
+        .then(function(contacts) {
           return syncService.addSyncStatus(contacts);
         });
     };
@@ -40,6 +40,20 @@ angular.module('lmisChromeApp')
           console.error(reason);
           return fullNames;
         });
+    };
+
+    this.getAllByDeviceId = function(deviceId) {
+      var db = pouchdb.create(this.CONTACT_DB);
+      var map = function(doc) {
+        if (utility.has(doc, 'dailyVisits')
+          && angular.isArray(doc.dailyVisits)
+          && utility.has(doc, 'deviceId')) {
+
+          emit(doc);
+
+        }
+      };
+      return db.query({map: map}, {reduce: false});
     };
 
   });

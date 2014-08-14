@@ -81,6 +81,14 @@ angular.module('lmisChromeApp')
         return $window.navigator.onLine;
       },
 
-      canConnect: canConnect
+      canConnect: canConnect,
+
+      getDeviceId: function(){
+        if(utility.has($window, 'device')){
+          return $window.device.uuid;
+        }
+        return '';
+      }
+
     };
   });

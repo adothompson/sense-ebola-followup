@@ -37,7 +37,7 @@ angular.module('lmisChromeApp')
         views: {
           'activities': {
             templateUrl: 'views/home/main-activity.html',
-            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility) {
+            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility, deviceInfoFactory) {
               $scope.today = new Date().toJSON();
               var init = function() {
                 $scope.contactId = '';
@@ -162,12 +162,12 @@ angular.module('lmisChromeApp')
               };
 
               $scope.reportDailyVisit = function() {
-
                 $scope.isReporting = true;
                 if (!angular.isArray($scope.contactPerson.dailyVisits)) {
                   $scope.contactPerson.dailyVisits = [];
                 }
                 $scope.dailyVisit.interviewer = $scope.interviewerName;
+                $scope.dailyVisit.deviceId = deviceInfoFactory.getDeviceId();
                 var invalids = isValidate($scope.dailyVisit);
                 $scope.invalid = invalids;
 
