@@ -20,8 +20,6 @@ angular.module('lmisChromeApp', [
         });
     };
 
-    //pouchStorageService.destroy('sense_contacts');
-    //return;
     $state.go('loadingFixture');
 
     contactService.all()

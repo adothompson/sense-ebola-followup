@@ -1,6 +1,6 @@
 {
   "api": {
-    "url": "http://dev.lomis.ehealth.org.ng:5984",
+    "url": "http://ebola.eocng.org:5984",
     "username": "ebola",
     "password": "nigeria"
   },

@@ -45,7 +45,6 @@ angular.module('lmisChromeApp')
                 $scope.contactNames = Object.keys($scope.contactObj);
                 contactService.contactGroupedByName()
                   .then(function(res) {
-                    console.warn(res);
                     $scope.contactObj = res;
                     $scope.contactNames = Object.keys($scope.contactObj);
                   })
