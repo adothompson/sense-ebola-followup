@@ -44,6 +44,12 @@ angular.module('lmisChromeApp')
           });
       };
 
+      var dumpStorage = function(db) {
+        pouchStorageService.allDocs(db).then(function(res) {
+          console.log(JSON.stringify(res));
+        });
+      };
+
       var getData = function(key) {
         return pouchStorageService.allDocs(key);
       };
@@ -275,6 +281,7 @@ angular.module('lmisChromeApp')
         where: getFromTableByLambda,
         find: getFromTableByKey,
         insertBatch: insertBatch,
+        dumpStorage: dumpStorage,
         APP_CONFIG: appConfig,
         CCU_BREAKDOWN: ccuBreakdown,
         DISCARD_COUNT: discardCount,

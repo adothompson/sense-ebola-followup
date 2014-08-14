@@ -37,7 +37,7 @@ angular.module('lmisChromeApp')
         views: {
           'activities': {
             templateUrl: 'views/home/main-activity.html',
-            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility) {
+            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility, storageService) {
               $scope.today = new Date().toJSON();
               var init = function() {
                 $scope.contactId = '';
@@ -183,6 +183,10 @@ angular.module('lmisChromeApp')
                       saveDailyVisits(contact);
                     });
                 }
+              };
+
+              $scope.dumpStorage = function() {
+                storageService.dumpStorage(contactService.CONTACT_DB);
               };
 
               var saveDailyVisits = function(contact) {
