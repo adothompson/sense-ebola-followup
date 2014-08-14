@@ -51,7 +51,7 @@
                     <i ng-show="isSyncing[$index] === true" class="fa fa-spinner fa-spin"></i>
                     <i ng-show="isSyncing[$index] !== true"
                        class="fa "
-                       ng-class="{'fa-check-circle text-success': contact.synced, 'fa-times-circle text-danger': !contact.synced}">
+                       ng-class="{'fa-check-circle text-success': contact.synced === true, 'fa-times-circle text-danger': contact.synced !== true }">
 
                 </i></td>
             </tr>

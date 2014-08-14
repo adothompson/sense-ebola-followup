@@ -49,7 +49,7 @@ angular.module('lmisChromeApp')
                 $scope.contactObj = {};
                 $scope.contactNames = Object.keys($scope.contactObj);
                 contactService.contactGroupedByName()
-                  .then(function(res){
+                  .then(function(res) {
                     $scope.contactObj = res;
                     $scope.contactNames = Object.keys($scope.contactObj);
                   })
@@ -89,17 +89,15 @@ angular.module('lmisChromeApp')
                 return new Date(d).toJSON();
               };
 
-              $scope.syncContact = function(c, i){
-                if(c.synced !== true){
-                  $scope.isSyncing[i] = true;
-                  syncService.syncUpRecord(contactService.CONTACT_DB, c)
-                    .then(function(){
-                      c.synced = true;
-                    })
-                    .finally(function(){
-                      $scope.isSyncing[i] = false;
-                    });
-                }
+              $scope.syncContact = function(c, i) {
+                $scope.isSyncing[i] = true;
+                syncService.syncUpRecord(contactService.CONTACT_DB, c)
+                  .then(function() {
+                    c.synced = true;
+                  })
+                  .finally(function() {
+                    $scope.isSyncing[i] = false;
+                  });
               };
 
               $scope.getContactInfo = function() {
