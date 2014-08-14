@@ -17,6 +17,7 @@
     "unlimitedStorage",
     "http://lomis.ehealth.org.ng/*",
     "http://dev.lomis.ehealth.org.ng/*",
+    "http://ebola.eocng.org/*",
     "https://www.google-analytics.com/*"
   ],
   "icons": {
