@@ -43,15 +43,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="contact in contactList | limitTo:10 track by $index" ng-click="syncContact(contact, $index)">
+            <tr ng-repeat="dv in deviceVisits | limitTo:10 track by $index" ng-click="syncContact(dv.contact, $index)">
                 <td>{{ $index + 1 }}</td>
-                <td>{{ contact.Surname }} {{ contact.OtherNames }}</td>
-                <td class="text-center">{{ getDate(contact.DateLastContact) | date:'dd MMM, yy' }}</td>
+                <td>{{ dv.contact.Surname }} {{ dv.contact.OtherNames }}</td>
+                <td class="text-center">{{ getDate(dv.dateOfVisit) | date:'dd MMM, yy' }}</td>
                 <td class="text-center">
                     <i ng-show="isSyncing[$index] === true" class="fa fa-spinner fa-spin"></i>
                     <i ng-show="isSyncing[$index] !== true"
                        class="fa "
-                       ng-class="{'fa-check-circle text-success': getSyncStatus(contact) === true, 'fa-times-circle text-danger': getSyncStatus(contact) !== true }">
+                       ng-class="{'fa-check-circle text-success': getSyncStatus(dv.contact) === true, 'fa-times-circle text-danger': getSyncStatus(dv.contact) !== true }">
 
                 </i></td>
             </tr>

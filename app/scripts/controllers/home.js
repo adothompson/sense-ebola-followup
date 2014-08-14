@@ -7,12 +7,7 @@ angular.module('lmisChromeApp')
     $stateProvider
       .state('home', {
         parent: 'root.index',
-        templateUrl: 'views/home/index.html',
-        resolve: {
-          contacts: function(contactService) {
-            return contactService.contactGroupedByName();
-          }
-        }
+        templateUrl: 'views/home/index.html'
       })
       .state('home.index', {
         abstract: true,
@@ -37,7 +32,7 @@ angular.module('lmisChromeApp')
         views: {
           'activities': {
             templateUrl: 'views/home/main-activity.html',
-            controller: function($scope, $state, growl, i18n, contacts, contactService, locationFactory, syncService, utility, deviceInfoFactory) {
+            controller: function($scope, $state, growl, i18n, contactService, locationFactory, syncService, utility, deviceInfoFactory) {
               $scope.today = new Date().toJSON();
               var init = function() {
                 $scope.contactId = '';
@@ -50,6 +45,7 @@ angular.module('lmisChromeApp')
                 $scope.contactNames = Object.keys($scope.contactObj);
                 contactService.contactGroupedByName()
                   .then(function(res) {
+                    console.warn(res);
                     $scope.contactObj = res;
                     $scope.contactNames = Object.keys($scope.contactObj);
                   })
@@ -70,16 +66,12 @@ angular.module('lmisChromeApp')
                   geoInfo: {}
                 };
                 $scope.invalid = {};
-                var sortByDateLastContactedDesc = function(a, b) {
-                  return new Date(a.modified) < new Date(b.modified);
+                var sortByDateOfVisitDesc = function(a, b) {
+                  return new Date(a.dateOfVisit) < new Date(b.dateOfVisit);
                 };
-                contactService.all()
+                contactService.getAllByDeviceId(deviceInfoFactory.getDeviceId())
                   .then(function(res) {
-                    var contactList = res;
-                    contactList = contactList.filter(function(a) {
-                      return utility.has(a, 'modified');
-                    });
-                    $scope.contactList = contactList.sort(sortByDateLastContactedDesc);
+                    $scope.deviceVisits = res.sort(sortByDateOfVisitDesc);
                   });
               };
 
@@ -89,7 +81,7 @@ angular.module('lmisChromeApp')
                 return new Date(d).toJSON();
               };
 
-              $scope.getSyncStatus = function(c){
+              $scope.getSyncStatus = function(c) {
                 return syncService.getSyncStatus(c).synced;
               }
 
@@ -232,4 +224,5 @@ angular.module('lmisChromeApp')
           }
         }
       });
-  });
+  })
+;

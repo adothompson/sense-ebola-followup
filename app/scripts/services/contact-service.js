@@ -43,17 +43,25 @@ angular.module('lmisChromeApp')
     };
 
     this.getAllByDeviceId = function(deviceId) {
-      var db = pouchdb.create(this.CONTACT_DB);
-      var map = function(doc) {
-        if (utility.has(doc, 'dailyVisits')
-          && angular.isArray(doc.dailyVisits)
-          && utility.has(doc, 'deviceId')) {
-
-          emit(doc);
-
-        }
-      };
-      return db.query({map: map}, {reduce: false});
+      return this.all()
+        .then(function(contacts) {
+          var dailyVisitsByDevice = [];
+          var dailyVisit;
+          var res;
+          for (var i in contacts) {
+            var contact = contacts[i];
+            if (utility.has(contact, 'dailyVisits') && angular.isArray(contact.dailyVisits)) {
+              for (var i in contact.dailyVisits) {
+                dailyVisit = contact.dailyVisits[i];
+                if (utility.has(dailyVisit, 'deviceId') && dailyVisit.deviceId === deviceId) {
+                  res = { contact: contact, dateOfVisit: dailyVisit.dateOfVisit };
+                  dailyVisitsByDevice.push(res);
+                }
+              }
+            }
+          }
+          return dailyVisitsByDevice;
+        });
     };
 
   });
