@@ -33,9 +33,17 @@ angular.module('lmisChromeApp', [
             .then(function() {
               $state.go('home.index.home.mainActivity');
             })
-            .catch(function(err) {
-              console.error(err);
-              growl.error('Downloading contacts failed, contact support.');
+            .catch(function() {
+              // FIXME: Try to reinit as auth call deterministically fails
+              // on the first try.
+              initializeContactDB()
+                .then(function() {
+                  $state.go('home.index.home.mainActivity');
+                })
+                .catch(function(err) {
+                  console.error(err);
+                  growl.error('Downloading contacts failed, contact support.');
+                });
             });
         }
       })

@@ -14,25 +14,17 @@ angular.module('lmisChromeApp')
     var loadDatabaseFromRemote = function(dbName) {
       var dbUrl = [REMOTE_URI, '/', dbName].join('');
       var db = pouchdb.create(dbUrl);
-      var map = function(doc) {
-        if (doc) {
-          /* globals emit: false */
-          // PouchDB injects this, see:
-          // http://pouchdb.com/api.html#query_database
-          emit(doc);
-        }
-      };
-      return db.info()
+      return db.login(config.api.username, config.api.password)
         .then(function() {
-          return db.query({map: map}, {reduce: false})
+          return db.allDocs({
+            // jshint camelcase: false
+            include_docs: true
+          })
             .then(function(res) {
-              var data = res.rows;
-              var dbRecords = [];
-              for (var i in data) {
-                var record = data[i].key;
-                dbRecords.push(record);
-              }
-              return utility.castArrayToObject(dbRecords, '_id');
+              var docs = res.rows.map(function(row) {
+                return row.doc;
+              });
+              return utility.castArrayToObject(docs, '_id');
             });
         });
     };
