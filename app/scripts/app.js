@@ -27,7 +27,9 @@ angular.module('lmisChromeApp', [
           growl.success('Contact list updated successfully.');
         })
         .then(function(err) {
-          growl.error('Contact list update failed, check your internet connection or contact support.');
+          if(typeof err !== 'undefined'){
+            growl.error('Contact list update failed, check your internet connection or contact support.');
+          }
           console.error(err);
         })
         .finally(function() {
