@@ -3,7 +3,7 @@
 angular.module('lmisChromeApp')
   .service('contactService', function($q, storageService, syncService, pouchdb, utility) {
 
-    this.CONTACT_DB = 'new_sense';
+    this.CONTACT_DB = 'sense_contacts';
 
     this.save = function(contact) {
       return storageService.save(this.CONTACT_DB, contact);
