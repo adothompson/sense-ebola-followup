@@ -12,6 +12,7 @@ angular.module('lmisChromeApp', [
     'db'
   ])
   .run(function($state, fixtureLoaderService, contactService, growl) {
+
     var initializeContactDB = function() {
       var databases = [contactService.CONTACT_DB];
       return fixtureLoaderService.loadRemoteDB(databases)
@@ -20,12 +21,26 @@ angular.module('lmisChromeApp', [
         });
     };
 
+    var updateContactListAndGoHome = function() {
+      contactService.updateFromRemote()
+        .then(function() {
+          growl.success('Contact list updated successfully.');
+        })
+        .then(function(err) {
+          growl.error('Contact list update failed, check your internet connection or contact support.');
+          console.error(err);
+        })
+        .finally(function() {
+          $state.go('home.index.home.mainActivity');
+        });
+    };
+
     $state.go('loadingFixture');
 
     contactService.all()
       .then(function(contacts) {
         if (contacts.length > 0) {
-          $state.go('home.index.home.mainActivity');
+          updateContactListAndGoHome();
         } else {
           initializeContactDB()
             .then(function() {
@@ -45,7 +60,7 @@ angular.module('lmisChromeApp', [
             });
         }
       })
-      .catch(function(error){
+      .catch(function(error) {
         console.log(error);
         growl.error('Error occurred while reading contacts database, contact support.');
       });
@@ -57,9 +72,9 @@ angular.module('lmisChromeApp', [
   })
   .config(function(growlProvider) {
     growlProvider.globalTimeToLive({
-      success: 2000,
-      error: 5000,
-      warning: 2000,
-      info: 2000
+      success: 10000,
+      error: 15000,
+      warning: 20000,
+      info: 20000
     });
   });
