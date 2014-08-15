@@ -76,11 +76,16 @@ angular.module('lmisChromeApp')
       if (deviceInfoFactory.isOnline()) {
         return syncUpAndUpdateLocal(dbName, doc)
           .catch(function(reason) {
-            console.error(reason);
-            return addToPendingSyncList(pendingSync);
+            return addToPendingSyncList(pendingSync)
+              .finally(function(){
+                return $q.reject(reason);
+              });
           });
       } else {
-        return addToPendingSyncList(pendingSync);
+        return addToPendingSyncList(pendingSync)
+          .finally(function(){
+            return $q.reject('device is offline');
+          });
       }
     };
 

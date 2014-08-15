@@ -5,8 +5,8 @@ angular.module('lmisChromeApp')
     var DB_NAME = 'new_sense';
     this.CONTACT_DB = DB_NAME;
 
-    var saveContact = function(contact) {
-      return storageService.save(DB_NAME, contact);
+    var saveContact = function(contact, updateLastModified) {
+      return storageService.save(DB_NAME, contact, updateLastModified);
     };
 
     this.save = function(contact) {
@@ -151,7 +151,7 @@ angular.module('lmisChromeApp')
                   console.error('Contact is not an object: ' + JSON.stringify(contact));
                   continue;
                 }
-                promises.push(saveContact(contact));
+                promises.push(storageService.add(DB_NAME, contact));
               }
               console.log(alreadyUpdatedContacts.length);
               return $q.all(promises);

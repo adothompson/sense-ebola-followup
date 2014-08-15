@@ -141,10 +141,10 @@ angular.module('lmisChromeApp')
        * @param data
        * @returns {*}
        */
-      var saveData = function(table, data) {
+      var saveData = function(table, data, shouldModify) {
         if ((typeof data === 'object') && (data !== null)) {
           if (Object.keys(data).indexOf('_id') !== -1 && data._id.length > 0) {
-            return updateData(table, data);
+            return updateData(table, data, shouldModify);
           } else {
             return insertData(table, data);
           }
