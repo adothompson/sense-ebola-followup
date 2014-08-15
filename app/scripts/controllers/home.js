@@ -47,7 +47,7 @@ angular.module('lmisChromeApp')
                   .then(function(res) {
                     $scope.contactObj = res;
                     $scope.contactNames = Object.keys($scope.contactObj);
-                  })
+                  });
 
                 $scope.dailyVisit = {
                   symptoms: {
@@ -82,7 +82,7 @@ angular.module('lmisChromeApp')
 
               $scope.getSyncStatus = function(c) {
                 return syncService.getSyncStatus(c).synced;
-              }
+              };
 
               $scope.syncContact = function(c, i) {
                 $scope.isSyncing[i] = true;
@@ -117,6 +117,14 @@ angular.module('lmisChromeApp')
                 }
               };
 
+              var normaliseDecimal = function(num) {
+                return parseFloat(num, 10).toFixed(2);
+              };
+
+              var isInvalidTemperature = function(temperature) {
+                return temperature >= 100;
+              };
+
               var isInvalid = function(value) {
                 return (isNaN(value) || value === '');
               };
@@ -141,8 +149,13 @@ angular.module('lmisChromeApp')
 
                 for (var type in dailyVisit.symptoms) {
                   var value = dailyVisit.symptoms[type];
-                  if (type === 'temperature' && isInvalid(value)) {
-                    invalids[type] = true;
+                  if (type === 'temperature') {
+                    var decimal = normaliseDecimal(dailyVisit.symptoms.temperature);
+                    if (isInvalid(decimal) || isInvalidTemperature(decimal)) {
+                      invalids[type] = true;
+                    } else {
+                      dailyVisit.symptoms.temperature = decimal;
+                    }
                   } else {
                     if (type !== 'temperature' && value !== true && value !== false) {
                       invalids[type] = true;
