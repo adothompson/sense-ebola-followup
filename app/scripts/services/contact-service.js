@@ -2,7 +2,7 @@
 
 angular.module('lmisChromeApp')
   .service('contactService', function($q, storageService, syncService, config, pouchStorageService, utility) {
-    var DB_NAME = 'sense_contacts';
+    var DB_NAME = 'new_sense';
     this.CONTACT_DB = DB_NAME;
 
     var saveContact = function(contact) {
@@ -153,6 +153,7 @@ angular.module('lmisChromeApp')
                 }
                 promises.push(saveContact(contact));
               }
+              console.log(alreadyUpdatedContacts.length);
               return $q.all(promises);
             });
         });
